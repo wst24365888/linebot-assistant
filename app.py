@@ -43,6 +43,8 @@ def handle_message(event):
     reply = 'functions\n1. 抽數字\nusage\t抽,min,max'
     if '抽' in message:
         trash, min_num, max_num = message.split(',')
+        min_num = int(min_num)
+        max_num = int(max_num)
         reply = '{}'.format(rd.randint(min_num,max_num))
 
     line_bot_api.reply_message(
