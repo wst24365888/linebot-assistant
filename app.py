@@ -10,6 +10,8 @@ from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage,
 )
 
+import random as rd
+
 app = Flask(__name__)
 
 line_bot_api = LineBotApi('ew9Gu+/a0OB/IT90r8mEiLaipylgz85Kw9maa8624PWPZsvnggQrt1iEbkMaPXFyJD+u6P3zmvMYiY3k3fu0+/c6lGZTcpG0AdeUs+ChuJ00knWPevFv2Jxnjnv6b+J9BmZkBGO5Zsms74pn42KasAdB04t89/1O/w1cDnyilFU=')
@@ -38,9 +40,10 @@ def callback():
 def handle_message(event):
 
     message = event.message.text
-    reply = 'fail'
-    if 'test' in message:
-        reply = 'success'
+    reply = 'functions\n1. 抽數字\nusage\t抽,min,max'
+    if '抽' in message:
+        trash, min_num, max_num = message.split(',')
+        reply = '{}'.format(rd.randint(min_num,max_num))
 
     line_bot_api.reply_message(
         event.reply_token,
