@@ -40,8 +40,11 @@ def callback():
 def handle_message(event):
 
     message = event.message.text
-    reply = 'functions\n1. 抽數字\nusage\t抽,min,max'
-    if '抽' in message:
+    reply = '目前有以下功能哦~\n1. 抽數字\nusage:\t抽,min,max'
+
+    if '早' in message or '安' in message or '嗨' in message or 'hello' in message or 'hi' in message:
+        reply = '安安'
+    elif '抽' in message:
         trash, min_num, max_num = message.split(',')
         min_num = int(min_num)
         max_num = int(max_num)
