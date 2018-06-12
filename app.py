@@ -52,7 +52,7 @@ def handle_message(event):
     else:
         cmd = event.message.text
 
-    reply = '目前有以下功能哦~\n\n1. 抽數字\n輸入\'抽 min,max\'\nex.\ninput: 抽 1,100\noutput: 87\n\n2. 多項式拆出一次式\n輸入\'拆 terms1,terms2,...\'\nex.\ninput: 拆 1,2,1\noutput: (x+1)'    
+    reply = '目前有以下功能哦~\n\n1. 抽數字\n輸入\'抽 min,max\'\nex.\ninput: 抽 1,100\noutput: 87\n\n2. 多項式拆出一次式\n輸入\'拆 terms1,terms2,...\'\nex.\ninput: 拆 1,2,1\noutput: (x+1)\n\n3. 找圖片\ninput: 找 貓咪'    
 
     if '早' in cmd or '嘿' in cmd or '安' in cmd or '嗨' in cmd or  '你好' in cmd or'hello' in cmd or 'hi' in cmd or 'hey' in cmd:
         hello_seed = rd.randint(1,4)
@@ -96,7 +96,7 @@ def handle_message(event):
         #生成網址
         img_url = ''
 
-        for i in range(small_array.find('link')+8, small_array.find('/",')):
+        for i in range(small_array.find('link')+8, small_array.find('/",')+1):
             img_url += small_array[i]
         
         line_bot_api.reply_message(
