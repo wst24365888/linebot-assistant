@@ -70,7 +70,7 @@ def handle_message(event):
             event.reply_token,
             ImageSendMessage(
                 original_content_url='https://www.taiwan.net.tw/resources/images/Attractions/0001095.jpg',
-                preview_image_url='https://www.taiwan.net.tw/resources/images/Attractions/0001095.jpg'))
+                preview_image_url='https://i0.wp.com/img.hojenjen.com/uploads/2017/10/1506964794-4efdd2f969559e8b1c92e99f32ded48e.jpg?resize=1801%2C1200'))
 
     line_bot_api.reply_message(
         event.reply_token,
