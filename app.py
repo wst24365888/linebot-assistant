@@ -72,7 +72,7 @@ def handle_message(event):
 
     elif '扭' in cmd:
         options = images.ImageOptions()
-        return_pic = google.search_images(messages, options)
+        return_pic, pic = google.search_images(messages, options)
         line_bot_api.reply_message(
             event.reply_token,
             ImageSendMessage(
