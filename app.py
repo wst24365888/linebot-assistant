@@ -12,6 +12,8 @@ from linebot.models import (
 
 import random as rd
 
+import newton_separate
+
 app = Flask(__name__)
 
 line_bot_api = LineBotApi('ew9Gu+/a0OB/IT90r8mEiLaipylgz85Kw9maa8624PWPZsvnggQrt1iEbkMaPXFyJD+u6P3zmvMYiY3k3fu0+/c6lGZTcpG0AdeUs+ChuJ00knWPevFv2Jxnjnv6b+J9BmZkBGO5Zsms74pn42KasAdB04t89/1O/w1cDnyilFU=')
@@ -40,15 +42,30 @@ def callback():
 def handle_message(event):
 
     message = event.message.text
-    reply = '目前有以下功能哦~\n1. 抽數字\nusage:\t抽,min,max'
+    reply = '目前有以下功能哦~\n\n1. 抽數字\n輸入\'抽\'呼叫\n\n2. 多項式拆出一次式\n輸入\'拆\''
 
-    if '早' in message or '安' in message or '嗨' in message or 'hello' in message or 'hi' in message:
+    if '早' in message or '安' in message or '嗨' in message or  '你好' in message or'hello' in message or 'hi' in message:
+        mode = 0
         reply = '安安'
     elif '抽' in message:
-        trash, min_num, max_num = message.split(',')
+        mode = 1
+        reply = '輸入 min,max 即會從範圍裡抽一個數字\nex.\ninput: 1,100\noutput: 87'
+    elif '拆' in message:
+        mode = 2
+        reply = '輸入多項式的各項係數並用逗號分開\nex.\ninput: 1,2,1\noutput: (x+1)'
+    else:
+        mode = 0
+
+
+    if mode == 1:
+        min_num, max_num = message.split(',')
         min_num = int(min_num)
         max_num = int(max_num)
         reply = '{}'.format(rd.randint(min_num,max_num))
+        mode = 0
+    elif mode == 2:
+        reply = run_main(message.split(','))
+        mode = 0
 
     line_bot_api.reply_message(
         event.reply_token,
