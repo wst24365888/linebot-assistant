@@ -10,11 +10,11 @@ from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage, ImageSendMessage
 )
 
+from google import google, images
+
 import random as rd
 
 import newton_separate
-
-from google import google, images
 
 app = Flask(__name__)
 
@@ -51,7 +51,6 @@ def handle_message(event):
     reply = '目前有以下功能哦~\n\n1. 抽數字\n輸入\'抽 min,max\'\nex.\ninput: 抽 1,100\noutput: 87\n\n2. 多項式拆出一次式\n輸入\'拆 terms1,terms2,...\'\nex.\ninput: 拆 1,2,1\noutput: (x+1)'    
 
     if '早' in cmd or '嘿' in cmd or '安' in cmd or '嗨' in cmd or  '你好' in cmd or'hello' in cmd or 'hi' in cmd or 'hey' in cmd:
-
         hello_seed = rd.randint(1,4)
         if hello_seed == 1:
             reply = '安安'
@@ -63,27 +62,23 @@ def handle_message(event):
             reply = 'hello'
 
     elif '抽' in cmd:
-
         min_num, max_num = messages.split(',')
         min_num = int(min_num)
         max_num = int(max_num)
         reply = '{}'.format(rd.randint(min_num,max_num))
-        
-    elif '拆' in cmd:
 
+    elif '拆' in cmd:
         reply = newton_separate.run_main(messages)
 
     elif '扭' in cmd:
-
-        options = images.ImageOptions()
-        reply_img = google.search_images(messages, options)
-        reply = reply_img.link
-
+        #options = images.ImageOptions()
+        return_pic = google.search_images(messages)
+        reply = return_pic.link
         line_bot_api.reply_message(
             event.reply_token,
             ImageSendMessage(
-                original_content_url = reply_img.link,
-                preview_image_url = reply_img.link))
+            original_content_url = reply,
+            preview_image_url = reply))
 
     line_bot_api.reply_message(
         event.reply_token,
