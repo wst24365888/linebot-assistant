@@ -2,4 +2,4 @@ line-bot-sdk
 gunicorn
 flask
 git+https://github.com/abenassi/Google-Search-API/
-firefox
+selenium

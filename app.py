@@ -12,9 +12,6 @@ from linebot.models import (
 
 from google import google, images
 
-import os
-os.chdir("C:/Program Files (x86)/Mozilla Firefox/firefox.exe")
-
 import random as rd
 
 import newton_separate
