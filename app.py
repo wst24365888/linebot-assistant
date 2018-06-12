@@ -71,14 +71,17 @@ def handle_message(event):
         reply = newton_separate.run_main(messages)
 
     elif '扭' in cmd:
+
+        reply = google.calculate("157.3kg in grams")
+
         #options = images.ImageOptions()
-        return_pic = google.search_images(messages)
-        reply = return_pic.link
-        line_bot_api.reply_message(
-            event.reply_token,
-            ImageSendMessage(
-            original_content_url = reply,
-            preview_image_url = reply))
+        #return_pic = google.search_images(messages)
+        #reply = return_pic.link
+        #line_bot_api.reply_message(
+        #    event.reply_token,
+        #    ImageSendMessage(
+        #    original_content_url = reply,
+        #    preview_image_url = reply))
 
     line_bot_api.reply_message(
         event.reply_token,
