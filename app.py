@@ -96,7 +96,7 @@ def handle_message(event):
         #生成網址
         img_url = ''
 
-        for j in range(small_array.find('link')+9, small_array.find('/",')+1):
+        for j in range(small_array.find('link')+8, small_array.find('/",')+1):
             img_url += small_array[j]
         
         #line_bot_api.reply_message(
