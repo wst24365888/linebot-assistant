@@ -72,7 +72,7 @@ def handle_message(event):
 
     elif '扭' in cmd:
 
-        reply = google.calculate("157.3kg in grams")
+        reply = google.calculate("{}kg in grams".format(messages))
 
         #options = images.ImageOptions()
         #return_pic = google.search_images(messages)
