@@ -1,11 +1,11 @@
-def gcd (x,y):
+def gcd(x,y):
 
     if x%y == 0:
         return y
 
     return gcd(y,x%y)
 
-def check (deg,terms,x,y):
+def check(deg,terms,x,y):
 
     check_saperate = 0
 
@@ -69,4 +69,6 @@ def run_main(input_terms):
                         reply += reply_temp
 
     if can_it_separate == 0:
-        print('Sorry, there is no result.')
+        reply += 'Sorry, there is no result.'
+
+    return reply
