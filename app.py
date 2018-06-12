@@ -60,13 +60,16 @@ def handle_message(event):
             reply = 'hi'
         elif hello_seed == 4:
             reply = 'hello'
+
     elif '抽' in cmd:
         min_num, max_num = messages.split(',')
         min_num = int(min_num)
         max_num = int(max_num)
         reply = '{}'.format(rd.randint(min_num,max_num))
+
     elif '拆' in cmd:
         reply = newton_separate.run_main(messages)
+        
     elif '扭' in cmd:
         reply_url = google.search_images(messages).link
         line_bot_api.reply_message(
