@@ -41,7 +41,11 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
 
-    cmd, messages = event.message.text.split()
+    if ' ' in event.message.text.split():
+        cmd, messages = event.message.text.split()
+    else:
+        cmd = event.message.text.split()
+        
     reply = '目前有以下功能哦~\n\n1. 抽數字\n輸入\'抽 min,max\'\nex.\ninput: 抽 1,100\noutput: 87\n\n2. 多項式拆出一次式\n輸入\'拆 terms1,terms2,...\'\nex.\ninput: 拆 1,2,1\noutput: (x+1)'    
 
     if '早' in cmd or '安' in cmd or '嗨' in cmd or  '你好' in cmd or'hello' in cmd or 'hi' in cmd:
@@ -52,7 +56,7 @@ def handle_message(event):
         max_num = int(max_num)
         reply = '{}'.format(rd.randint(min_num,max_num))
     elif '拆' in cmd:
-        reply = run_main(messages.split(','))
+        reply = newton_separate.run_main(messages.split(','))
 
     line_bot_api.reply_message(
         event.reply_token,
