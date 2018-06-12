@@ -10,11 +10,15 @@ from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage, ImageSendMessage
 )
 
-from google import google, images
-
 import random as rd
 
 import newton_separate
+
+import urllib.request as url
+
+import json
+
+import urllib.parse
 
 app = Flask(__name__)
 
@@ -62,27 +66,45 @@ def handle_message(event):
             reply = 'hello'
 
     elif '抽' in cmd:
+
         min_num, max_num = messages.split(',')
         min_num = int(min_num)
         max_num = int(max_num)
         reply = '{}'.format(rd.randint(min_num,max_num))
 
     elif '拆' in cmd:
+
         reply = newton_separate.run_main(messages)
 
-    elif '扭' in cmd:
+    elif '找' in cmd:
 
-        reply = google.calculate("{}kg in grams".format(messages)).value
+        keyword = urllib.parse.quote_plus('{}'.format(messages))    #生成keyword的url碼
 
-        #options = images.ImageOptions()
-        #return_pic = google.search_images(messages)
-        #reply = return_pic.link
-        #line_bot_api.reply_message(
-        #    event.reply_token,
-        #    ImageSendMessage(
-        #    original_content_url = reply,
-        #    preview_image_url = reply))
+        #一些必要過程
+        request = url.Request('https://api.flickr.com/services/feeds/photos_public.gne?format=json&tags={}'.format(keyword))
+        data = url.urlopen(request).read()
+        data = data.decode("utf-8")
+        data = json.dumps(data)
+        array = json.loads(data)
 
+        #縮小範圍
+        small_array = ''
+
+        for i in range(array.find('items'), array.find('date_taken')):
+            small_array += array[i]
+    
+        #生成網址
+        img_url = ''
+
+        for i in range(small_array.find('link')+8, small_array.find('/",')):
+            img_url += small_array[i]
+        
+        line_bot_api.reply_message(
+            event.reply_token,
+            ImageSendMessage(
+                original_content_url='https://example.com/original.jpg',
+                preview_image_url='https://example.com/preview.jpg'))
+        
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text = "{}".format(reply)))
