@@ -12,7 +12,7 @@ def check(deg,terms,x,y):
     reply = ""
 
     sum = 0
-    root = x/y*(-1)
+    root = y/x*(-1)
 
     for i4 in range (0,deg+1):
         sum += terms[i4]*root**i4
@@ -27,7 +27,7 @@ def check(deg,terms,x,y):
     root*=(-1)
 
     for i5 in range (0,deg+1):
-        sum += terms[i5]*root**i4
+        sum += terms[i5]*root**i5
     if sum == 0:
         if x==1:
             reply += "(x-{})".format(y)
