@@ -71,13 +71,14 @@ def handle_message(event):
         reply = newton_separate.run_main(messages)
 
     elif '扭' in cmd:
-        options = images.ImageOptions()
-        return_pic, pic = google.search_images(messages, options)
+        #options = images.ImageOptions()
+        return_pic = google.search_images(messages)
+        reply = return_pic.link
         line_bot_api.reply_message(
             event.reply_token,
             ImageSendMessage(
-            original_content_url = return_pic.link,
-            preview_image_url = return_pic.link))
+            original_content_url = reply,
+            preview_image_url = reply))
 
     line_bot_api.reply_message(
         event.reply_token,
