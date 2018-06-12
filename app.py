@@ -14,6 +14,8 @@ import random as rd
 
 import newton_separate
 
+from google import google, images
+
 app = Flask(__name__)
 
 line_bot_api = LineBotApi('ew9Gu+/a0OB/IT90r8mEiLaipylgz85Kw9maa8624PWPZsvnggQrt1iEbkMaPXFyJD+u6P3zmvMYiY3k3fu0+/c6lGZTcpG0AdeUs+ChuJ00knWPevFv2Jxnjnv6b+J9BmZkBGO5Zsms74pn42KasAdB04t89/1O/w1cDnyilFU=')
@@ -49,6 +51,7 @@ def handle_message(event):
     reply = '目前有以下功能哦~\n\n1. 抽數字\n輸入\'抽 min,max\'\nex.\ninput: 抽 1,100\noutput: 87\n\n2. 多項式拆出一次式\n輸入\'拆 terms1,terms2,...\'\nex.\ninput: 拆 1,2,1\noutput: (x+1)'    
 
     if '早' in cmd or '嘿' in cmd or '安' in cmd or '嗨' in cmd or  '你好' in cmd or'hello' in cmd or 'hi' in cmd or 'hey' in cmd:
+
         hello_seed = rd.randint(1,4)
         if hello_seed == 1:
             reply = '安安'
@@ -58,19 +61,29 @@ def handle_message(event):
             reply = 'hi'
         elif hello_seed == 4:
             reply = 'hello'
+
     elif '抽' in cmd:
+
         min_num, max_num = messages.split(',')
         min_num = int(min_num)
         max_num = int(max_num)
         reply = '{}'.format(rd.randint(min_num,max_num))
+        
     elif '拆' in cmd:
+
         reply = newton_separate.run_main(messages)
+
     elif '扭' in cmd:
+
+        options = images.ImageOptions()
+        reply_img = google.search_images(messages, options)
+        reply = reply_img.link
+
         line_bot_api.reply_message(
             event.reply_token,
             ImageSendMessage(
-                original_content_url='https://www.taiwan.net.tw/resources/images/Attractions/0001095.jpg',
-                preview_image_url='https://www.taiwan.net.tw/resources/images/Attractions/0001095.jpg'))
+                original_content_url = reply_img.link,
+                preview_image_url = reply_img.link))
 
     line_bot_api.reply_message(
         event.reply_token,
