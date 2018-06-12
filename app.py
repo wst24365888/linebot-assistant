@@ -56,7 +56,7 @@ def handle_message(event):
         max_num = int(max_num)
         reply = '{}'.format(rd.randint(min_num,max_num))
     elif '拆' in cmd:
-        reply = newton_separate.run_main(messages.split(','))
+        reply = newton_separate.run_main(messages)
 
     line_bot_api.reply_message(
         event.reply_token,
