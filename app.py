@@ -68,7 +68,7 @@ def handle_message(event):
     elif '拆' in cmd:
         reply = newton_separate.run_main(messages)
     elif '扭' in cmd:
-        reply_url = google.search_images(messages)
+        reply_url = google.search_images(messages).link
         line_bot_api.reply_message(
             event.reply_token,
             ImageSendMessage(
