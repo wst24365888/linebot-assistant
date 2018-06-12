@@ -10,6 +10,8 @@ from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage, ImageSendMessage
 )
 
+from google import google, images
+
 import random as rd
 
 import newton_separate
@@ -66,11 +68,12 @@ def handle_message(event):
     elif '拆' in cmd:
         reply = newton_separate.run_main(messages)
     elif '扭' in cmd:
+        reply_url = google.search_images(messages)
         line_bot_api.reply_message(
             event.reply_token,
             ImageSendMessage(
-                original_content_url='https://www.taiwan.net.tw/resources/images/Attractions/0001095.jpg',
-                preview_image_url='https://i0.wp.com/img.hojenjen.com/uploads/2017/10/1506964794-4efdd2f969559e8b1c92e99f32ded48e.jpg?resize=1801%2C1200'))
+                original_content_url = reply_url,
+                preview_image_url = reply_url))
 
     line_bot_api.reply_message(
         event.reply_token,
