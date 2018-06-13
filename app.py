@@ -14,15 +14,13 @@ import random as rd
 
 import newton_separate
 
-import urllib.request as url
-
-import json
+import urllib.request
 
 import urllib.parse
 
-import requests
+import re
 
-from bs4 import BeautifulSoup
+from user_agent import generate_user_agent
 
 app = Flask(__name__)
 
@@ -56,7 +54,7 @@ def handle_message(event):
     else:
         cmd = event.message.text
 
-    reply = '目前有以下功能哦~\n\n1. 抽數字\n輸入\'抽 min,max\'\nex.\ninput: 抽 1,100\noutput: 87\n\n2. 多項式拆出一次式\n輸入\'拆 terms1,terms2,...\'\nex.\ninput: 拆 1,2,1\noutput: (x+1)\n\n3. 找圖片\nex.\ninput: 找 貓咪\noutput: 一些flickr連結'    
+    reply = '目前有以下功能哦~\n\n1. 抽數字\n輸入\'抽 min,max\'\nex.\ninput: 抽 1,100\noutput: 87\n\n2. 多項式拆出一次式\n輸入\'拆 terms1,terms2,...\'\nex.\ninput: 拆 1,2,1\noutput: (x+1)\n\n3. 找圖片\nex.\ninput: 找,紅米 Note4(可以多關鍵字)\noutput: Google搜圖的第一個結果'    
 
     if '早' in cmd or '嘿' in cmd or '安' in cmd or '嗨' in cmd or  '你好' in cmd or'hello' in cmd or 'hi' in cmd or 'hey' in cmd:
         hello_seed = rd.randint(1,4)
@@ -82,24 +80,24 @@ def handle_message(event):
 
     elif '找' in cmd:
 
-        data = url.urlopen(url.Request('https://api.flickr.com/services/feeds/photos_public.gne?format=json&tags={}'.format(urllib.parse.quote_plus('{}'.format(messages))))).read().decode('utf-8')
+        keyword = urllib.parse.quote_plus('{}'.format(messages.split()))
 
-        data_str = ''
+        url = 'https://www.google.com/search?q={}&source=lnms&tbm=isch'.format(keyword)
 
-        for i in range(15,len(data)-1):
-            data_str += data[i]
+        headers = {}
+        headers['User-Agent'] = generate_user_agent()
+        headers['Referer'] = 'https://www.google.com'
+        req = urllib.request.Request(url, headers = headers)
+        resp = urllib.request.urlopen(req)
+        data = str(resp.read())
 
-        the_html = requests.get(json.loads(data_str)['items'][0]['link'])
-        
-        html_str = BeautifulSoup(the_html.text, 'html.parser')
-    
-        img_url = html_str.find(property="og:image")['content']
+        img_urls = re.findall('"ou":"(.*?)"', data)
 
         line_bot_api.reply_message(
         event.reply_token,
         ImageSendMessage(
-            original_content_url=img_url,
-            preview_image_url=img_url))
+            original_content_url=img_urls[0],
+            preview_image_url=img_urls[0]))
         
         
     line_bot_api.reply_message(
