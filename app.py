@@ -52,7 +52,7 @@ def handle_message(event):
     else:
         cmd = event.message.text
 
-    reply = '目前有以下功能哦~\n\n1. 抽數字\n輸入\'抽 min,max\'\nex.\ninput: 抽 1,100\noutput: 87\n\n2. 多項式拆出一次式\n輸入\'拆 terms1,terms2,...\'\nex.\ninput: 拆 1,2,1\noutput: (x+1)\n\n3. 找圖片\ninput: 找 貓咪'    
+    reply = '目前有以下功能哦~\n\n1. 抽數字\n輸入\'抽 min,max\'\nex.\ninput: 抽 1,100\noutput: 87\n\n2. 多項式拆出一次式\n輸入\'拆 terms1,terms2,...\'\nex.\ninput: 拆 1,2,1\noutput: (x+1)\n\n3. 找圖片\nex.\ninput: 找 貓咪\noutput: 一些flickr連結'    
 
     if '早' in cmd or '嘿' in cmd or '安' in cmd or '嗨' in cmd or  '你好' in cmd or'hello' in cmd or 'hi' in cmd or 'hey' in cmd:
         hello_seed = rd.randint(1,4)
@@ -85,7 +85,7 @@ def handle_message(event):
         for i in range(15,len(data)-1):
             data_str += data[i]
 
-        reply = json.loads(data_str)['items'][0]['link']    #將傳回來的data轉為dict型態
+        reply = '{}\n\n{}\n\n{}'.format(json.loads(data_str)['items'][0]['link'], json.loads(data_str)['items'][1]['link'], json.loads(data_str)['items'][2]['link'])    #將傳回來的data轉為dict型態, 並給定items中前三筆的link
         
     line_bot_api.reply_message(
         event.reply_token,
