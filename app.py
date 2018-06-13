@@ -104,8 +104,8 @@ def handle_message(event):
         line_bot_api.reply_message(
         event.reply_token,
         ImageSendMessage(
-            original_content_url=img_url,
-            preview_image_url=img_url))
+            original_content_url='{}'.format(img_url),
+            preview_image_url='{}'.format(img_url)))
         
         
     line_bot_api.reply_message(
