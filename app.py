@@ -99,23 +99,16 @@ def handle_message(event):
 
         img_urls = re.findall('"ou":"(.*?)"', data)
 
-        img_url = img_urls[0]
-
         line_bot_api.reply_message(
         event.reply_token,
         ImageSendMessage(
-            original_content_url='http://weknowyourdreams.com/images/sky/sky-02.jpg',
-            preview_image_url='http://weknowyourdreams.com/images/sky/sky-02.jpg'))
+            original_content_url=img_urls[0],
+            preview_image_url=img_urls[0]))
         
-    
+        
     line_bot_api.reply_message(
         event.reply_token,
-        ImageSendMessage(
-            original_content_url='weknowyourdreams.com/images/sky/sky-02.jpg',
-            preview_image_url='weknowyourdreams.com/images/sky/sky-02.jpg'))
-    #line_bot_api.reply_message(
-    #    event.reply_token,
-    #    TextSendMessage(text = "{}".format(reply)))
+        TextSendMessage(text = "{}".format(reply)))
 
 
 if __name__ == "__main__":
