@@ -85,7 +85,7 @@ def handle_message(event):
         for i in range(15,len(data)-1):
             data_str += data[i]
 
-        reply = json.loads(data_str)['items'][1]['link']
+        reply = json.loads(data_str)['items'][1]['link']    #將傳回來的data轉為dict型態
         
     line_bot_api.reply_message(
         event.reply_token,
