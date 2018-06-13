@@ -83,7 +83,7 @@ def handle_message(event):
         else:
             keyword = urllib.parse.quote_plus('{}'.format(messages))
 
-        data = url.urlopen(url.Request('https://api.flickr.com/services/feeds/photos_public.gne?format=json&tagmode=all&tags={}'.format(keyword))).read().decode('utf-8')
+        data = url.urlopen(url.Request('https://api.flickr.com/services/feeds/photos_public.gne?format=json&tags={}'.format(keyword))).read().decode('utf-8')
 
         data_str = ''
 
