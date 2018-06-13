@@ -83,9 +83,8 @@ def handle_message(event):
     elif '找' in cmd:
 
         html_temp = requests.get('https://www.google.com.tw/search?q={}&source=lnms&tbm=isch&sa=X&ved=0ahUKEwiUmZb4wNDbAhWHqJQKHaO5BGoQ_AUICygC&biw=1745&bih=885'.format(messages))
-
-        if html_temp.status_code == requests.codes.ok:
-            html_str = BeautifulSoup(html_temp.text, 'html.parser')
+        
+        html_str = BeautifulSoup(html_temp.text, 'html.parser')
     
         img_url = html_str.find(alt="「{}」的圖片搜尋結果".format(messages))['src']
 
