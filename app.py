@@ -20,6 +20,10 @@ import json
 
 import urllib.parse
 
+import requests
+
+from bs4 import BeautifulSoup
+
 app = Flask(__name__)
 
 line_bot_api = LineBotApi('ew9Gu+/a0OB/IT90r8mEiLaipylgz85Kw9maa8624PWPZsvnggQrt1iEbkMaPXFyJD+u6P3zmvMYiY3k3fu0+/c6lGZTcpG0AdeUs+ChuJ00knWPevFv2Jxnjnv6b+J9BmZkBGO5Zsms74pn42KasAdB04t89/1O/w1cDnyilFU=')
@@ -85,7 +89,19 @@ def handle_message(event):
         for i in range(15,len(data)-1):
             data_str += data[i]
 
-        reply = '{}\n\n{}\n\n{}'.format(json.loads(data_str)['items'][0]['link'], json.loads(data_str)['items'][1]['link'], json.loads(data_str)['items'][2]['link'])    #將傳回來的data轉為dict型態, 並給定items中前三筆的link
+        the_html = requests.get(json.loads(data_str)['items'][0]['link'])
+
+        if the_html.status_code == requests.codes.ok:   #html檔下載成功
+            html_str = BeautifulSoup(the_html.text, 'html.parser')
+    
+        img_url = html_str.find(property="og:image")['content']
+
+        line_bot_api.reply_message(
+        event.reply_token,
+        ImageSendMessage(
+            original_content_url=img_url,
+            preview_image_url=img_url))
+        
         
     line_bot_api.reply_message(
         event.reply_token,
