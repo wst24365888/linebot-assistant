@@ -78,7 +78,7 @@ def handle_message(event):
 
     elif '找' in cmd:
 
-        if messages.isdigit() == True:
+        if messages.isalnum() == True:
             keyword = messages
         else:
             keyword = urllib.parse.quote_plus('{}'.format(messages)
