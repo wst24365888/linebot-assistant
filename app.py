@@ -78,34 +78,14 @@ def handle_message(event):
 
     elif '找' in cmd:
 
-        keyword = urllib.parse.quote_plus('{}'.format(messages))    #生成keyword的url碼
+        data = url.urlopen(url.Request('https://api.flickr.com/services/feeds/photos_public.gne?format=json&tags={}'.format(urllib.parse.quote_plus('{}'.format(messages))))).read().decode('utf-8')
 
-        #一些必要過程
-        request = url.Request('https://api.flickr.com/services/feeds/photos_public.gne?format=json&tags={}'.format(keyword))
-        data = url.urlopen(request).read()
-        data = data.decode("utf-8")
-        data = json.dumps(data)
-        array = json.loads(data)
+        data_str = ''
 
-        #縮小範圍
-        small_array = ''
+        for i in range(15,len(data)-1):
+            data_str += data[i]
 
-        for i in range(array.find('items'), array.find('date_taken')):
-            small_array += array[i]
-    
-        #生成網址
-        img_url = ''
-
-        for j in range(small_array.find('link')+8, small_array.find('/",')+1):
-            img_url += small_array[j]
-        
-        #line_bot_api.reply_message(
-        #    event.reply_token,
-        #    ImageSendMessage(
-        #        original_content_url = img_url,
-        #        preview_image_url = img_url))
-
-        reply = img_url
+        reply = json.loads(data_str)['items'][1]['link']
         
     line_bot_api.reply_message(
         event.reply_token,
