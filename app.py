@@ -82,19 +82,12 @@ def handle_message(event):
 
     elif '找' in cmd:
 
-        data = url.urlopen(url.Request('https://api.flickr.com/services/feeds/photos_public.gne?format=json&tags={}'.format(urllib.parse.quote_plus('{}'.format(messages))))).read().decode('utf-8')
+        html_temp = requests.get('https://www.google.com.tw/search?q={}&source=lnms&tbm=isch&sa=X&ved=0ahUKEwiUmZb4wNDbAhWHqJQKHaO5BGoQ_AUICygC&biw=1745&bih=885'.format(messages))
 
-        data_str = ''
-
-        for i in range(15,len(data)-1):
-            data_str += data[i]
-
-        the_html = requests.get(json.loads(data_str)['items'][0]['link'])
-
-        if the_html.status_code == requests.codes.ok:   #html檔下載成功
-            html_str = BeautifulSoup(the_html.text, 'html.parser')
+        if html_temp.status_code == requests.codes.ok:
+            html_str = BeautifulSoup(html_temp.text, 'html.parser')
     
-        img_url = html_str.find(property="og:image")['content']
+        img_url = html_str.find(alt="「{}」的圖片搜尋結果".format(keyword))['src']
 
         line_bot_api.reply_message(
         event.reply_token,
