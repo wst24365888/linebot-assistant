@@ -90,9 +90,8 @@ def handle_message(event):
             data_str += data[i]
 
         the_html = requests.get(json.loads(data_str)['items'][0]['link'])
-
-        if the_html.status_code == requests.codes.ok:   #html檔下載成功
-            html_str = BeautifulSoup(the_html.text, 'html.parser')
+        
+        html_str = BeautifulSoup(the_html.text, 'html.parser')
     
         img_url = html_str.find(property="og:image")['content']
 
