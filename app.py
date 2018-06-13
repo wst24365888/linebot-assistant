@@ -50,7 +50,12 @@ def callback():
 def handle_message(event):
 
     if '找' in event.message.text:
-        cmd, messages, n = event.message.text.split(',')
+        if len(event.message.text.split(',')) == 3:
+            cmd, messages, n = event.message.text.split(',')
+            n = int(n)-1
+        else:
+            cmd, messages = event.message.text.split(',')
+            n = 0
     elif ' ' in event.message.text:
         cmd, messages = event.message.text.split()
     else:
