@@ -87,7 +87,7 @@ def handle_message(event):
         if html_temp.status_code == requests.codes.ok:
             html_str = BeautifulSoup(html_temp.text, 'html.parser')
     
-        img_url = html_str.find(alt="「{}」的圖片搜尋結果".format(keyword))['src']
+        img_url = html_str.find(alt="「{}」的圖片搜尋結果".format(messages))['src']
 
         line_bot_api.reply_message(
         event.reply_token,
