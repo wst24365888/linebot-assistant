@@ -100,7 +100,7 @@ def handle_message(event):
                 else:
                     keyword += '+'                    
 
-        url = 'https://www.google.com/search?q={}&source=lnms&tbm=isch'.format(keyword)
+        url = 'https://www.google.com/search?source=lnms&tbm=isch&q={}'.format(keyword)
 
         headers = {}
         headers['User-Agent'] = generate_user_agent()
