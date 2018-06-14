@@ -82,6 +82,8 @@ def handle_message(event):
 
         n = 0
 
+        check = 0
+
         if ';' in messages:
             messages, n = messages.split(';')
             n = int(n)-1
@@ -100,15 +102,15 @@ def handle_message(event):
         try:
             img_url = re.findall('"ou":"(.*?)"', data)[int(n)-1]
         except IndexError:
-            img_url = ''
+            check = 1
     
         try:
             test_url = urllib.request.urlopen(img_url)
         except urllib.error.HTTPError as error:
             print('{}'.format(error))
-            img_url = ''
+            check = 1
 
-        if 'https' not in img_url:
+        if 'https' not in img_url or check == 1:
             reply = 'This url may be not safe or it\'s down.'
         else:
             line_bot_api.reply_message(
