@@ -109,7 +109,7 @@ def handle_message(event):
             check = 1
 
         if 'https' not in img_url or check == 1:
-            reply = 'Sorry~ 沒有結果,可能原因:\n1. 找不到,換個關鍵字吧!\n2. 網站掛了QQ\n3. 圖片網址不安全'
+            reply = 'Sorry~\n發生了一些錯誤,可能原因:\n1. 找不到,換個關鍵字吧!\n2. 網站掛了QQ\n3. 圖片網址不安全'
         else:
             line_bot_api.reply_message(
                 event.reply_token,
