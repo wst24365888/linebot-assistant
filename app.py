@@ -54,7 +54,7 @@ def handle_message(event):
     else:
         cmd = event.message.text
 
-    reply = '目前有以下功能哦~\n\n1. 抽數字\n輸入\'抽 min,max\'\nex.\ninput: 抽 1,100\noutput: 87\n\n2. 多項式拆出一次式\n輸入\'拆 terms1,terms2,...\'\nex.\ninput: 拆 1,2,1\noutput: (x+1)\n\n3. 找圖片\nex.\ninput: 找 貓咪;n\noutput: Google搜圖的第n個結果\nNote. n可以不輸入, 預設為1'
+    reply = '目前有以下功能哦~\n\n1. 抽數字\n輸入\'抽 min,max\'\nex.\ninput: 抽 1,100\noutput: 87\n\n2. 多項式拆出一次式\n輸入\'拆 terms1,terms2,...\'\nex.\ninput: 拆 1,2,1\noutput: (x+1)\n\n3. 找圖片\nex.\ninput: 找 紅米,Note4X;n\noutput: Google搜圖的第n個結果\nNote. 可以多關鍵字, 輸入時請用逗號分開; n可以不輸入, 預設為1'
 
     if '早' in cmd or '嘿' in cmd or '安' in cmd or '嗨' in cmd or  '你好' in cmd or'hello' in cmd or 'hi' in cmd or 'hey' in cmd:
         hello_seed = rd.randint(1,4)
@@ -88,7 +88,13 @@ def handle_message(event):
             messages, n = messages.split(';')
             n = int(n)-1
 
-        keyword = urllib.parse.quote_plus('{}'.format(messages))
+        keyword = ''
+
+        if ',' not in messages:
+            keyword = urllib.parse.quote_plus('{}'.format(messages))
+        else:
+            for i in range(len(messages.split(','))):
+                keyword += messages.split(',')[i]
 
         url = 'https://www.google.com/search?q={}&source=lnms&tbm=isch'.format(keyword)
 
@@ -109,7 +115,7 @@ def handle_message(event):
             check = 1
 
         if 'https' not in img_url or check == 1:
-            reply = 'Sorry~\n發生了一些錯誤,可能原因:\n1. 找不到,換個關鍵字吧!\n2. 網站掛了QQ\n3. 圖片網址不安全'
+            reply = 'Sorry~\n發生了一些錯誤,可能原因:\n1. 找不到,換個關鍵字吧!\n2. 網站掛了QQ\n3. 圖片網址不安全\n4. 格式錯誤'
         else:
             line_bot_api.reply_message(
                 event.reply_token,
