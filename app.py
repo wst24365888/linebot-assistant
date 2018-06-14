@@ -97,15 +97,27 @@ def handle_message(event):
         resp = urllib.request.urlopen(req)
         data = str(resp.read())
 
-        img_urls = re.findall('"ou":"(.*?)"', data)
+        try:
+            img_url = re.findall('"ou":"(.*?)"', data)[int(n)]
+        except IndexError:
+            img_url = ''
+    
+        try:
+            test_url = urllib.request.urlopen(img_url)
+        except urllib.error.HTTPError as error:
+            print('{}'.format(error))
+            img_url = ''
 
-        #reply = img_urls[n]
+        if 'https' not in img_url:
+            reply = 'This url may be not safe or the image can\'t be found.'
+        else:
+            line_bot_api.reply_message(
+                event.reply_token,
+                ImageSendMessage(
+                    original_content_url=img_url,
+                    preview_image_url=img_url))
 
-        line_bot_api.reply_message(
-            event.reply_token,
-            ImageSendMessage(
-            original_content_url=img_urls[n],
-            preview_image_url=img_urls[n]))
+        
         
         
     line_bot_api.reply_message(
