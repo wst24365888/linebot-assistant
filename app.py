@@ -94,7 +94,11 @@ def handle_message(event):
             keyword = urllib.parse.quote_plus('{}'.format(messages))
         else:
             for i in range(len(messages.split(','))):
-                keyword += messages.split(',')[i]
+                keyword += urllib.parse.quote_plus('{}'.format(messages.split(',')[i]))
+                if i == len(messages.split(','))-1:
+                    break
+                else:
+                    keyword += '+'                    
 
         url = 'https://www.google.com/search?q={}&source=lnms&tbm=isch'.format(keyword)
 
