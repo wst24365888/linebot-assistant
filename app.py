@@ -99,11 +99,13 @@ def handle_message(event):
 
         img_urls = re.findall('"ou":"(.*?)"', data)
 
-        line_bot_api.reply_message(
-            event.reply_token,
-            ImageSendMessage(
-            original_content_url=img_urls[n],
-            preview_image_url=img_urls[n]))
+        reply = img_urls[n]
+
+#        line_bot_api.reply_message(
+ #           event.reply_token,
+  #          ImageSendMessage(
+   #         original_content_url=img_urls[n],
+    #        preview_image_url=img_urls[n]))
         
         
     line_bot_api.reply_message(
