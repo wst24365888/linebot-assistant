@@ -101,11 +101,9 @@ def handle_message(event):
 
         try:
             img_url = re.findall('"ou":"(.*?)"', data)[int(n)-1]
+            test_url = urllib.request.urlopen(img_url)
         except IndexError:
             check = 1
-    
-        try:
-            test_url = urllib.request.urlopen(img_url)
         except urllib.error.HTTPError as error:
             print('{}'.format(error))
             check = 1
