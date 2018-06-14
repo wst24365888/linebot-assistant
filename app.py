@@ -98,7 +98,7 @@ def handle_message(event):
         data = str(resp.read())
 
         try:
-            img_url = re.findall('"ou":"(.*?)"', data)[int(n)]
+            img_url = re.findall('"ou":"(.*?)"', data)[int(n)-1]
         except IndexError:
             img_url = ''
     
@@ -109,7 +109,7 @@ def handle_message(event):
             img_url = ''
 
         if 'https' not in img_url:
-            reply = 'This url may be not safe or the image can\'t be found.'
+            reply = 'This url may be not safe or it\'s down.'
         else:
             line_bot_api.reply_message(
                 event.reply_token,
