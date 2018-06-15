@@ -127,8 +127,11 @@ def handle_message(event):
                     original_content_url=img_url,
                     preview_image_url=img_url))
 
+    elif 'user' in cmd:
         
-        
+        profile = line_bot_api.get_profile(user_id)
+
+        reply = '{}\n{}\n{}\n{}'.format(profile.display_name, profile.user_id, profile.picture_url, profile.status_message)
         
     line_bot_api.reply_message(
         event.reply_token,
