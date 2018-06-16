@@ -153,7 +153,7 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             TemplateSendMessage(
-            alt_text='Buttons template',
+            alt_text='(選單)',
             template=ButtonsTemplate(
                 thumbnail_image_url='https://i.pinimg.com/originals/53/07/1d/53071d73b869c9263b912e3b8a6fe459.gif',
                 title='現有功能',
@@ -190,7 +190,7 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             TemplateSendMessage(
-            alt_text='Buttons template',
+            alt_text='(選單)',
             template=ButtonsTemplate(
                 title='抽數字',
                 text='輸入\'min,max\'\nex. 1,100',
@@ -218,7 +218,7 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             TemplateSendMessage(
-            alt_text='Buttons template',
+            alt_text='(選單)',
             template=ButtonsTemplate(
                 title='拆解多項式',
                 text='輸入\'terms1,terms2,...\'\nex. 1,2,1',
@@ -246,7 +246,7 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             TemplateSendMessage(
-            alt_text='Buttons template',
+            alt_text='(選單)',
             template=ButtonsTemplate(
                 title='找圖片',
                 text='輸入\'關鍵字,指定筆數(預設為1)\'\nex. 紅米 Note4X,2',
@@ -321,7 +321,7 @@ def handle_message(event):
             line_bot_api.reply_message(
                 event.reply_token,
                 TemplateSendMessage(
-                alt_text='Buttons template',
+                alt_text='(選單)',
                 template=ButtonsTemplate(
                     thumbnail_image_url='https://i.pinimg.com/originals/53/07/1d/53071d73b869c9263b912e3b8a6fe459.gif',
                     title='現有功能',
