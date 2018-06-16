@@ -122,6 +122,7 @@ def handle_message(event):
                 mode = int(lines)
     except:
         with open('./user_cmd/{}_cmd.txt'.format(profile.user_id), 'w') as f:
+            print('ok!')
             mode = 0
             f.write(str(mode))
 
