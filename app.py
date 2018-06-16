@@ -6,9 +6,7 @@ from linebot import (
 from linebot.exceptions import (
     InvalidSignatureError
 )
-from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage, ImageSendMessage
-)
+from linebot.models import *
 
 import random as rd
 
@@ -127,11 +125,35 @@ def handle_message(event):
                     original_content_url=img_url,
                     preview_image_url=img_url))
 
-    elif 'user' in cmd:
+    elif 'test' in cmd:
 
-        profile = line_bot_api.get_profile(event.source.user_id)
-
-        reply = profile.user_id
+        #profile = line_bot_api.get_profile(event.source.user_id)
+        
+        line_bot_api.reply_message(
+            event.reply_token,
+            TemplateSendMessage(
+            alt_text='Buttons template',
+            template=ButtonsTemplate(
+                thumbnail_image_url='https://example.com/image.jpg',
+                title='Menu',
+                text='Please select',
+                actions=[
+                    MessageAction(
+                        label='message1',
+                        text='1'
+                    ),
+                    MessageAction(
+                        label='message2',
+                        text='2'
+                    ),
+                    MessageAction(
+                        label='message3',
+                        text='3'
+                    )
+                ]
+            )
+            )
+        )
         
     line_bot_api.reply_message(
         event.reply_token,
