@@ -173,6 +173,8 @@ def handle_message(event):
             )
         )
 
+        return 0
+
     elif '抽數字' in cmd:
 
         mode = 1
@@ -316,6 +318,8 @@ def handle_message(event):
                 )
                 )
             )
+
+            return 0
 
 if __name__ == "__main__":
     app.run()
