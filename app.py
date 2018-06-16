@@ -6,7 +6,9 @@ from linebot import (
 from linebot.exceptions import (
     InvalidSignatureError
 )
-from linebot.models import *
+from linebot.models import (
+    MessageEvent, TextMessage, TextSendMessage, ImageSendMessage, TemplateSendMessage
+)
 
 import random as rd
 
