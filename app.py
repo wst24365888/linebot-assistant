@@ -323,7 +323,7 @@ def handle_message(event):
                 TemplateSendMessage(
                 alt_text='Buttons template',
                 template=ButtonsTemplate(
-                    #thumbnail_image_url='https://i.pinimg.com/originals/53/07/1d/53071d73b869c9263b912e3b8a6fe459.gif',
+                    thumbnail_image_url='https://i.pinimg.com/originals/53/07/1d/53071d73b869c9263b912e3b8a6fe459.gif',
                     title='現有功能',
                     text='請選擇:',
                     actions=[
