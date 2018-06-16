@@ -136,18 +136,62 @@ def handle_message(event):
 
         return 0
 
+    elif '回到主頁' in cmd:
+
+        mode = 0
+
+        with open('{}_cmd.txt'.format(profile.user_id), 'w') as f:
+            f.write(str(mode))
+
+        line_bot_api.reply_message(
+            event.reply_token,
+            TemplateSendMessage(
+            alt_text='Buttons template',
+            template=ButtonsTemplate(
+                #thumbnail_image_url='https://i.pinimg.com/originals/53/07/1d/53071d73b869c9263b912e3b8a6fe459.gif',
+                title='現有功能',
+                text='請選擇:',
+                actions=[
+                    MessageTemplateAction(
+                        label='抽數字',
+                        text='抽數字'
+                    ),
+                    MessageTemplateAction(
+                        label='拆解多項式',
+                        text='拆解多項式'
+                    ),
+                    MessageTemplateAction(
+                        label='找圖片',
+                        text='找圖片'
+                    )
+                ]
+            )
+            )
+        )
+
     elif '抽數字' in cmd:
 
         mode = 1
-
-        reply = '目前使用的是抽數字的功能!\n輸入\'min,max\'\nex.\ninput: 1,100\noutput: 87'
 
         with open('{}_cmd.txt'.format(profile.user_id), 'w') as f:
             f.write(str(mode))
         
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text = "{}".format(reply)))
+            TemplateSendMessage(
+            alt_text='Buttons template',
+            template=ButtonsTemplate(
+                title='抽數字',
+                text='目前使用的是抽數字的功能!\n輸入\'min,max\'\nex.\ninput: 1,100\noutput: 87',
+                actions=[
+                    MessageTemplateAction(
+                        label='回到主頁',
+                        text='回到主頁'
+                    )
+                ]
+            )
+            )
+        )
 
         return 0
 
@@ -155,14 +199,25 @@ def handle_message(event):
 
         mode = 2
 
-        reply = '目前使用的是拆解多項式的功能!\n輸入\'terms1,terms2,...\'\nex.\ninput: 1,2,1\noutput: (x+1)'
-
         with open('{}_cmd.txt'.format(profile.user_id), 'w') as f:
             f.write(str(mode))
         
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text = "{}".format(reply)))
+            TemplateSendMessage(
+            alt_text='Buttons template',
+            template=ButtonsTemplate(
+                title='拆解多項式',
+                text='目前使用的是拆解多項式的功能!\n輸入\'terms1,terms2,...\'\nex.\ninput: 1,2,1\noutput: (x+1)',
+                actions=[
+                    MessageTemplateAction(
+                        label='回到主頁',
+                        text='回到主頁'
+                    )
+                ]
+            )
+            )
+        )
 
         return 0
 
@@ -170,14 +225,25 @@ def handle_message(event):
 
         mode = 3
 
-        reply = '目前使用的是找圖片的功能!\n輸入\'關鍵字,指定筆數\'\nex.\ninput: 找 紅米 Note4X,n\noutput: Google搜圖的第n個結果\nNote. 可以多關鍵字, 輸入時請用空格分開; n可以不輸入, 預設為1'
-
         with open('{}_cmd.txt'.format(profile.user_id), 'w') as f:
             f.write(str(mode))
         
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text = "{}".format(reply)))
+            TemplateSendMessage(
+            alt_text='Buttons template',
+            template=ButtonsTemplate(
+                title='找圖片',
+                text='目前使用的是找圖片的功能!\n輸入\'關鍵字,指定筆數\'\nex.\ninput: 找 紅米 Note4X,n\noutput: Google搜圖的第n個結果\nNote. 可以多關鍵字, 輸入時請用空格分開; n可以不輸入, 預設為1',
+                actions=[
+                    MessageTemplateAction(
+                        label='回到主頁',
+                        text='回到主頁'
+                    )
+                ]
+            )
+            )
+        )
 
         return 0
                     
