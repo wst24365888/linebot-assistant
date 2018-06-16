@@ -116,17 +116,21 @@ def handle_message(event):
 
     cmd = event.message.text
 
+    print(cmd)
+
     try:
         with open('{}_cmd.txt'.format(profile.user_id), 'r') as f:
             for lines in f:
                 mode = int(lines)
+            print(mode)
     except:
         with open('{}_cmd.txt'.format(profile.user_id), 'w') as f:
-            print('ok!')
             mode = 0
             f.write(str(mode))
 
     if '早' in cmd or '嘿' in cmd or '安' in cmd or '嗨' in cmd or  '你好' in cmd or'hello' in cmd or 'hi' in cmd or 'hey' in cmd:
+
+        print('打招呼')
 
         reply = hello()
         
