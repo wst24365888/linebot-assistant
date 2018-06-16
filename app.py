@@ -131,6 +131,11 @@ def handle_message(event):
 
     if '早' in cmd or '嘿' in cmd or '安' in cmd or '嗨' in cmd or  '你好' in cmd or'hello' in cmd or 'hi' in cmd or 'hey' in cmd:
 
+        mode = 0
+
+        with open('{}_cmd.txt'.format(profile.user_id), 'w') as f:
+            f.write(str(mode))
+
         print('打招呼')
 
         reply = hello()
@@ -141,7 +146,7 @@ def handle_message(event):
 
         return 0
 
-    elif '回到主頁' in cmd:
+    elif '回到主頁' in cmd or '功能' in cmd:
 
         mode = 0
 
@@ -193,7 +198,7 @@ def handle_message(event):
             alt_text='(選單)',
             template=ButtonsTemplate(
                 title='抽數字',
-                text='輸入\'min,max\'\nex. 1,100',
+                text='請輸入\'min,max\'\nex. 1,100',
                 actions=[
                     MessageTemplateAction(
                         label='回到主頁',
@@ -221,7 +226,7 @@ def handle_message(event):
             alt_text='(選單)',
             template=ButtonsTemplate(
                 title='拆解多項式',
-                text='輸入\'terms1,terms2,...\'\nex. 1,2,1',
+                text='請輸入\'terms1,terms2,...\'\nex. 1,2,1',
                 actions=[
                     MessageTemplateAction(
                         label='回到主頁',
@@ -249,7 +254,7 @@ def handle_message(event):
             alt_text='(選單)',
             template=ButtonsTemplate(
                 title='找圖片',
-                text='輸入\'關鍵字,指定筆數(預設為1)\'\nex. 紅米 Note4X,2',
+                text='請輸入\'關鍵字,指定筆數(預設為1)\'\nex. 紅米 Note4X,2',
                 actions=[
                     MessageTemplateAction(
                         label='回到主頁',
