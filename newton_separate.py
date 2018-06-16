@@ -54,8 +54,6 @@ def run_main(input_terms):
         terms.append(terms_temp[deg-i1])
         terms[i1] = int(terms[i1])
 
-    print('=>')
-
     terms_constant = abs(terms[0])
     terms_highest = abs(terms[deg])
 

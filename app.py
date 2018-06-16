@@ -275,6 +275,10 @@ def handle_message(event):
         elif mode == 2:
 
             reply = newton_separate.run_main(cmd)
+        
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text = "{}".format(reply)))
 
             return 0
 
