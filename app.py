@@ -117,11 +117,11 @@ def handle_message(event):
     cmd = event.message.text
 
     try:
-        with open('./user_cmd/{}_cmd.txt'.format(profile.user_id), 'r') as f:
+        with open('{}_cmd.txt'.format(profile.user_id), 'r') as f:
             for lines in f:
                 mode = int(lines)
     except:
-        with open('./user_cmd/{}_cmd.txt'.format(profile.user_id), 'w') as f:
+        with open('{}_cmd.txt'.format(profile.user_id), 'w') as f:
             print('ok!')
             mode = 0
             f.write(str(mode))
@@ -142,7 +142,7 @@ def handle_message(event):
 
         reply = '目前使用的是抽數字的功能!\n輸入\'min,max\'\nex.\ninput: 1,100\noutput: 87'
 
-        with open('./user_cmd/{}_cmd.txt'.format(profile.user_id), 'w') as f:
+        with open('{}_cmd.txt'.format(profile.user_id), 'w') as f:
             f.write(str(mode))
         
         line_bot_api.reply_message(
@@ -157,7 +157,7 @@ def handle_message(event):
 
         reply = '目前使用的是拆解多項式的功能!\n輸入\'terms1,terms2,...\'\nex.\ninput: 1,2,1\noutput: (x+1)'
 
-        with open('./user_cmd/{}_cmd.txt'.format(profile.user_id), 'w') as f:
+        with open('{}_cmd.txt'.format(profile.user_id), 'w') as f:
             f.write(str(mode))
         
         line_bot_api.reply_message(
@@ -172,7 +172,7 @@ def handle_message(event):
 
         reply = '目前使用的是找圖片的功能!\n輸入\'關鍵字,指定筆數\'\nex.\ninput: 找 紅米 Note4X,n\noutput: Google搜圖的第n個結果\nNote. 可以多關鍵字, 輸入時請用空格分開; n可以不輸入, 預設為1'
 
-        with open('./user_cmd/{}_cmd.txt'.format(profile.user_id), 'w') as f:
+        with open('{}_cmd.txt'.format(profile.user_id), 'w') as f:
             f.write(str(mode))
         
         line_bot_api.reply_message(
@@ -218,7 +218,7 @@ def handle_message(event):
 
             mode = 0
 
-            with open('./user_cmd/{}_cmd.txt'.format(profile.user_id), 'w') as f:
+            with open('{}_cmd.txt'.format(profile.user_id), 'w') as f:
                 f.write(str(mode))
 
             line_bot_api.reply_message(
