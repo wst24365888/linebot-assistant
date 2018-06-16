@@ -76,18 +76,18 @@ def find_img(messages):
 
     img_url = ''
 
-    if ';' in messages:
+    keyword = ''
+
+    if ',' in messages:
         messages, n = messages.split(',')
         n = int(n)-1
 
-    keyword = ''
-
-    if ',' not in messages:
+    if ' ' not in messages:
         keyword = urllib.parse.quote_plus('{}'.format(messages))
     else:
-        for i in range(len(messages.split(','))):
+        for i in range(len(messages.split())):
             keyword += urllib.parse.quote_plus('{}'.format(messages.split()[i]))
-            if i == len(messages.split(','))-1:
+            if i == len(messages.split())-1:
                 break
             else:
                 keyword += '+' 
