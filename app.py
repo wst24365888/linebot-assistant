@@ -7,7 +7,7 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage, ImageSendMessage, TemplateSendMessage, ButtonsTemplate
+    MessageEvent, TextMessage, TextSendMessage, ImageSendMessage, TemplateSendMessage, ButtonsTemplate, MessageTemplateAction
 )
 
 import random as rd
@@ -140,15 +140,15 @@ def handle_message(event):
                 title='Menu',
                 text='Please select',
                 actions=[
-                    MessageAction(
+                    MessageTemplateAction(
                         label='message1',
                         text='1'
                     ),
-                    MessageAction(
+                    MessageTemplateAction(
                         label='message2',
                         text='2'
                     ),
-                    MessageAction(
+                    MessageTemplateAction(
                         label='message3',
                         text='3'
                     )
