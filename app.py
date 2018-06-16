@@ -247,7 +247,7 @@ def handle_message(event):
             alt_text='Buttons template',
             template=ButtonsTemplate(
                 title='找圖片',
-                text='輸入\'關鍵字,指定筆數\'\nex. 找 紅米 Note4X,n\nNote. 可以多關鍵字, 輸入時請用空格分開; n可以不輸入, 預設為1',
+                text='輸入\'關鍵字,指定筆數(預設為1)\'\nex. 找 紅米 Note4X,2',
                 actions=[
                     MessageTemplateAction(
                         label='回到主頁',
