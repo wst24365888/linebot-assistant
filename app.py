@@ -74,6 +74,8 @@ def find_img(messages):
 
     check = 0
 
+    img_url = ''
+
     if ';' in messages:
         messages, n = messages.split(',')
         n = int(n)-1
