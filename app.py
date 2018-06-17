@@ -22,6 +22,10 @@ import re
 
 import os
 
+import requests
+
+from bs4 import BeautifulSoup
+
 from user_agent import generate_user_agent
 
 app = Flask(__name__)
@@ -50,6 +54,7 @@ def callback():
 def hello():
 
     hello_seed = rd.randint(1,4)
+
     if hello_seed == 1:
         reply = '安安'
     elif hello_seed == 2:
@@ -112,6 +117,27 @@ def find_img(messages):
         check = 1
 
     return img_url, check
+
+def dcard_top_5():
+
+    reply = ''
+
+    url = 'https://www.dcard.tw/f'
+    resp = requests.get(url)
+    soup = BeautifulSoup(resp.text, 'html.parser')
+
+    dcard_titles = soup.find_all('h3', 'PostEntry_title_H5o4d PostEntry_unread_2U217')
+    dcard_links = soup.find_all('a', 'PostEntry_root_V6g0r')
+
+    dcard_article = []
+
+    for i in range(5):
+        dcard_article.append([dcard_titles[i].text, 'https://www.dcard.tw' + dcard_links[i]['href']])
+    
+    for index, item in enumerate(dcard_article):
+        reply += '{}. {}\n{}\n'.format(index + 1, item[0], item[1])
+
+    return reply
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
@@ -268,6 +294,16 @@ def handle_message(event):
         )
 
         return 0
+
+    elif 'Dcard 熱門文章 Top 5' in cmd:
+
+        reply = dcard_top_5()
+        
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text = "{}".format(reply)))
+
+        return 0    
                     
     else:
 
@@ -345,6 +381,10 @@ def handle_message(event):
                         MessageTemplateAction(
                             label='找圖片',
                             text='找圖片'
+                        ),
+                        MessageTemplateAction(
+                            label='Dcard 熱門文章 Top 5',
+                            text='Dcard 熱門文章 Top 5'
                         )
                     ]
                 )
