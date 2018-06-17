@@ -131,7 +131,7 @@ def handle_message(event):
 
     print(cmd)
 
-    if '早' in cmd or '嘿' in cmd or '安' in cmd or '嗨' in cmd or  '你好' in cmd or'hello' in cmd or 'hi' in cmd or 'hey' in cmd and mode != 3:
+    if ('早' in cmd or '嘿' in cmd or '安' in cmd or '嗨' in cmd or  '你好' in cmd or'hello' in cmd or 'hi' in cmd or 'hey' in cmd) and mode != 3:
 
         mode = 0
 
