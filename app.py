@@ -228,7 +228,7 @@ def handle_message(event):
             alt_text='(選單)',
             template=ButtonsTemplate(
                 title='拆解多項式',
-                text='請輸入\'terms1,terms2,...\'\nex. 1,2,1',
+                text='請輸入\'terms1,terms2,...\'\nex. 1,-2,1',
                 actions=[
                     MessageTemplateAction(
                         label='回到主頁',
