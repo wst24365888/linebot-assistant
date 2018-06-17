@@ -226,7 +226,7 @@ def handle_message(event):
                         text='Dcard 熱門文章 TOP 5'
                     )
                 ]
-            ),
+            )
 #CarouselColumn(
 #    #thumbnail_image_url='https://i.pinimg.com/originals/53/07/1d/53071d73b869c9263b912e3b8a6fe459.gif',
 #    title='小工具',
