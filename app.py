@@ -140,7 +140,7 @@ def dcard_top_5():
 
 def ptt_top_5():
 
-    reply = 'PTT 熱門文章 TOP 5'
+    reply = 'PTT 熱門文章 TOP 5\n'
 
     url = 'https://disp.cc/m/'
     resp = requests.get(url)
@@ -161,7 +161,7 @@ def ptt_top_5():
 
 def newtalk_top_5():
 
-    reply = 'NewTalk 即時新聞 TOP 5'
+    reply = 'NewTalk 即時新聞 TOP 5\n'
 
     url = 'http://newtalk.tw/news/summary/today'
     resp = requests.get(url)
@@ -180,7 +180,7 @@ def newtalk_top_5():
         newtalk_article.append([newtalk_block_2[i].find('div', 'news_title').text.strip(), newtalk_block_2[i].find('a')['href']])
     
     for index, item in enumerate(newtalk_article):
-        reply += '{}. {}\n{}\n'.format(index + 1, item[0], item[1])
+        reply += '\n{}. {}\n{}\n'.format(index + 1, item[0], item[1])
 
     return reply
 
@@ -224,18 +224,18 @@ def handle_message(event):
                         text='Dcard 熱門文章 TOP 5'
                     )
                 ]
-            ),
-            CarouselColumn(
-                thumbnail_image_url='https://i.pinimg.com/originals/53/07/1d/53071d73b869c9263b912e3b8a6fe459.gif',
-                title='小工具',
-                text='請選擇:',
-                actions=[
-                    MessageTemplateAction(
-                        label='找圖片',
-                        text='找圖片'
-                    )
-                ]
             )
+#    CarouselColumn(
+#        thumbnail_image_url='https://i.pinimg.com/originals/53/07/1d/53071d73b869c9263b912e3b8a6fe459.gif',
+#        title='小工具',
+#        text='請選擇:',
+#        actions=[
+#            MessageTemplateAction(
+#                label='找圖片',
+#                text='找圖片'
+#            )
+#        ]
+#    )
             ]
         )
     )
