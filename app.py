@@ -148,7 +148,7 @@ def handle_message(event):
 
         return 0
 
-    elif '回到主頁' in cmd or '功能' in cmd:
+    elif '回到主頁' in cmd or '功能' in cmd or '選單' in cmd:
 
         mode = 0
 
