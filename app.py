@@ -193,8 +193,9 @@ def handle_message(event):
         alt_text='(選單)',
         template=CarouselTemplate(
             columns=[
+            # Note:三個Carousel中actions都得要相同, 不然會整台掛掉
             CarouselColumn(
-                #thumbnail_image_url='https://truth.bahamut.com.tw/s01/201711/1264bad8430c679ef5c7ffd685244218.JPG',
+                thumbnail_image_url='https://truth.bahamut.com.tw/s01/201711/1264bad8430c679ef5c7ffd685244218.JPG',
                 title='數學工具',
                 text='請選擇:',
                 actions=[
@@ -209,7 +210,7 @@ def handle_message(event):
                 ]
             ),
             CarouselColumn(
-                #thumbnail_image_url='https://i.ytimg.com/vi/A1LtAYGom9Y/maxresdefault.jpg',
+                thumbnail_image_url='https://i.ytimg.com/vi/A1LtAYGom9Y/maxresdefault.jpg',
                 title='爬蟲',
                 text='請選擇:',
                 actions=[
@@ -220,6 +221,17 @@ def handle_message(event):
                     MessageTemplateAction(
                         label='PTT 熱門文章 TOP 5',
                         text='PTT 熱門文章 TOP 5'
+                    )
+                ]
+            ),
+            CarouselColumn(
+                thumbnail_image_url='https://i.pinimg.com/originals/53/07/1d/53071d73b869c9263b912e3b8a6fe459.gif',
+                title='小工具',
+                text='請選擇:',
+                actions=[
+                    MessageTemplateAction(
+                        label='找圖片',
+                        text='找圖片'
                     ),
                     MessageTemplateAction(
                         label='Dcard 熱門文章 TOP 5',
@@ -227,17 +239,6 @@ def handle_message(event):
                     )
                 ]
             )
-#CarouselColumn(
-#    #thumbnail_image_url='https://i.pinimg.com/originals/53/07/1d/53071d73b869c9263b912e3b8a6fe459.gif',
-#    title='小工具',
-#    text='請選擇:',
-#    actions=[
-#        MessageTemplateAction(
-#            label='找圖片',
-#            text='找圖片'
-#        )
-#    ]
-#)
             ]
         )
     )
