@@ -33,7 +33,6 @@ app = Flask(__name__)
 line_bot_api = LineBotApi(os.environ['line_bot_api'])
 handler = WebhookHandler(os.environ['handler'])
 
-
 @app.route("/callback", methods=['POST'])
 def callback():
     # get X-Line-Signature header value
@@ -120,7 +119,7 @@ def find_img(messages):
 
 def dcard_top_5():
 
-    reply = ''
+    reply = 'Dcard 熱門文章 Top 5\n'
 
     url = 'https://www.dcard.tw/f'
     resp = requests.get(url)
@@ -135,7 +134,7 @@ def dcard_top_5():
         dcard_article.append([dcard_titles[i].text, 'https://www.dcard.tw' + dcard_links[i]['href']])
     
     for index, item in enumerate(dcard_article):
-        reply += '{}. {}\n{}\n'.format(index + 1, item[0], item[1])
+        reply += '\n{}. {}\n{}\n'.format(index + 1, item[0], item[1])
 
     return reply
 
