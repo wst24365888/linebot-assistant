@@ -182,7 +182,7 @@ def newtalk_top_5():
     for index, item in enumerate(newtalk_article):
         reply += '{}. {}\n{}\n'.format(index + 1, item[0], item[1])
 
-        return reply
+    return reply
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
