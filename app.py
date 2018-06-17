@@ -157,6 +157,33 @@ def ptt_top_5():
     for index, item in enumerate(ptt_article):
         reply += '\n{}. {}\n{}\n'.format(index + 1, item[0], item[1])
 
+    return reply
+
+def newtalk_top_5():
+
+    reply = 'NewTalk 即時新聞 TOP 5'
+
+    url = 'http://newtalk.tw/news/summary/today'
+    resp = requests.get(url)
+    resp.encoding = 'utf-8'
+    soup = BeautifulSoup(resp.text, 'html.parser')
+
+    newtalk_block_1 = soup.find_all('div', 'news-title')
+    newtalk_block_2 = soup.find_all('div', 'text col-md-8 col-sm-8 col-xs-6')
+
+    newtalk_article = []
+
+    for i in range(2):
+        newtalk_article.append([newtalk_block_1[i].text, newtalk_block_1[i].find('a')['href']])
+
+    for i in range(3):
+        newtalk_article.append([newtalk_block_2[i].find('div', 'news_title').text.strip(), newtalk_block_2[i].find('a')['href']])
+    
+    for index, item in enumerate(newtalk_article):
+        reply += '{}. {}\n{}\n'.format(index + 1, item[0], item[1])
+
+        return reply
+
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
 
@@ -180,13 +207,13 @@ def handle_message(event):
                 ]
             ),
             CarouselColumn(
-                thumbnail_image_url='https://i.pinimg.com/originals/53/07/1d/53071d73b869c9263b912e3b8a6fe459.gif',
+                thumbnail_image_url='https://i.ytimg.com/vi/A1LtAYGom9Y/maxresdefault.jpg',
                 title='爬蟲',
                 text='請選擇:',
                 actions=[
                     MessageTemplateAction(
-                        label='找圖片',
-                        text='找圖片'
+                        label='NewTalk 即時新聞 TOP 5',
+                        text='NewTalk 即時新聞 TOP 5'
                     ),
                     MessageTemplateAction(
                         label='PTT 熱門文章 TOP 5',
@@ -195,6 +222,17 @@ def handle_message(event):
                     MessageTemplateAction(
                         label='Dcard 熱門文章 TOP 5',
                         text='Dcard 熱門文章 TOP 5'
+                    )
+                ]
+            ),
+            CarouselColumn(
+                thumbnail_image_url='https://i.pinimg.com/originals/53/07/1d/53071d73b869c9263b912e3b8a6fe459.gif',
+                title='小工具',
+                text='請選擇:',
+                actions=[
+                    MessageTemplateAction(
+                        label='找圖片',
+                        text='找圖片'
                     )
                 ]
             )
@@ -333,6 +371,16 @@ def handle_message(event):
         )
 
         return 0
+
+    elif 'NewTalk 即時新聞 TOP 5' in cmd:
+
+        reply = newtalk_top_5()
+        
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text = "{}".format(reply)))
+
+        return 0  
 
     elif 'PTT 熱門文章 Top 5' in cmd:
 
