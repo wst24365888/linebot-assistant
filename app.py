@@ -7,7 +7,7 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage, ImageSendMessage, TemplateSendMessage, ButtonsTemplate, MessageTemplateAction
+    MessageEvent, TextMessage, TextSendMessage, ImageSendMessage, TemplateSendMessage, ButtonsTemplate, MessageTemplateAction, CarouselTemplate, CarouselColumn
 )
 
 import random as rd
@@ -142,6 +142,44 @@ def dcard_top_5():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
 
+    template = TemplateSendMessage(
+        alt_text='(選單)',
+        template=CarouselTemplate(
+            columns=[
+            CarouselColumn(
+                thumbnail_image_url='https://i.pinimg.com/originals/53/07/1d/53071d73b869c9263b912e3b8a6fe459.gif',
+                title='數學工具',
+                text='請選擇:',
+                actions=[
+                    MessageTemplateAction(
+                        label='抽數字',
+                        text='抽數字'
+                    ),
+                    MessageTemplateAction(
+                        label='拆解多項式',
+                        text='拆解多項式'
+                    )
+                ]
+            ),
+            CarouselColumn(
+                thumbnail_image_url='https://i.pinimg.com/originals/53/07/1d/53071d73b869c9263b912e3b8a6fe459.gif',
+                title='爬蟲',
+                text='請選擇:',
+                actions=[
+                    MessageTemplateAction(
+                        label='找圖片',
+                        text='找圖片'
+                    ),
+                    MessageTemplateAction(
+                        label='Dcard 熱門文章 Top 5',
+                        text='Dcard 熱門文章 Top 5'
+                    )
+                ]
+            )
+            ]
+        )
+    )
+
     profile = line_bot_api.get_profile(event.source.user_id)
 
     cmd = event.message.text
@@ -185,28 +223,7 @@ def handle_message(event):
 
         line_bot_api.reply_message(
             event.reply_token,
-            TemplateSendMessage(
-            alt_text='(選單)',
-            template=ButtonsTemplate(
-                thumbnail_image_url='https://i.pinimg.com/originals/53/07/1d/53071d73b869c9263b912e3b8a6fe459.gif',
-                title='現有功能',
-                text='請選擇:',
-                actions=[
-                    MessageTemplateAction(
-                        label='抽數字',
-                        text='抽數字'
-                    ),
-                    MessageTemplateAction(
-                        label='拆解多項式',
-                        text='拆解多項式'
-                    ),
-                    MessageTemplateAction(
-                        label='找圖片',
-                        text='找圖片'
-                    )
-                ]
-            )
-            )
+            template
         )
 
         return 0
@@ -363,32 +380,7 @@ def handle_message(event):
 
             line_bot_api.reply_message(
                 event.reply_token,
-                TemplateSendMessage(
-                alt_text='(選單)',
-                template=ButtonsTemplate(
-                    thumbnail_image_url='https://i.pinimg.com/originals/53/07/1d/53071d73b869c9263b912e3b8a6fe459.gif',
-                    title='現有功能',
-                    text='請選擇:',
-                    actions=[
-                        MessageTemplateAction(
-                            label='抽數字',
-                            text='抽數字'
-                        ),
-                        MessageTemplateAction(
-                            label='拆解多項式',
-                            text='拆解多項式'
-                        ),
-                        MessageTemplateAction(
-                            label='找圖片',
-                            text='找圖片'
-                        ),
-                        MessageTemplateAction(
-                            label='Dcard 熱門文章 Top 5',
-                            text='Dcard 熱門文章 Top 5'
-                        )
-                    ]
-                )
-                )
+                template
             )
 
             return 0
