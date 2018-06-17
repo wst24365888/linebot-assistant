@@ -147,7 +147,7 @@ def handle_message(event):
         template=CarouselTemplate(
             columns=[
             CarouselColumn(
-                thumbnail_image_url='https://i.pinimg.com/originals/53/07/1d/53071d73b869c9263b912e3b8a6fe459.gif',
+                thumbnail_image_url='https://truth.bahamut.com.tw/s01/201711/1264bad8430c679ef5c7ffd685244218.JPG',
                 title='數學工具',
                 text='請選擇:',
                 actions=[
