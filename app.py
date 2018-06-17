@@ -14,20 +14,20 @@ import random as rd
 
 import newton_separate
 
-import secret
-
 import urllib.request
 
 import urllib.parse
 
 import re
 
+import os
+
 from user_agent import generate_user_agent
 
 app = Flask(__name__)
 
-line_bot_api = LineBotApi(secret.line_bot_api())
-handler = WebhookHandler(secret.handler())
+line_bot_api = LineBotApi(os.environ['line_bot_api'])
+handler = WebhookHandler(os.environ['handler'])
 
 
 @app.route("/callback", methods=['POST'])
