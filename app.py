@@ -157,6 +157,8 @@ def ptt_top_5():
     for index, item in enumerate(ptt_article):
         reply += '\n{}. {}\n{}\n'.format(index + 1, item[0], item[1])
 
+    print('ok!!')
+
     return reply
 
 def newtalk_top_5():
@@ -224,18 +226,18 @@ def handle_message(event):
                         text='Dcard 熱門文章 TOP 5'
                     )
                 ]
+            ),
+            CarouselColumn(
+                thumbnail_image_url='https://i.pinimg.com/originals/53/07/1d/53071d73b869c9263b912e3b8a6fe459.gif',
+                title='小工具',
+                text='請選擇:',
+                actions=[
+                    MessageTemplateAction(
+                        label='找圖片',
+                        text='找圖片'
+                    )
+                ]
             )
-#    CarouselColumn(
-#        thumbnail_image_url='https://i.pinimg.com/originals/53/07/1d/53071d73b869c9263b912e3b8a6fe459.gif',
-#        title='小工具',
-#        text='請選擇:',
-#        actions=[
-#            MessageTemplateAction(
-#                label='找圖片',
-#                text='找圖片'
-#            )
-#        ]
-#    )
             ]
         )
     )
@@ -383,6 +385,8 @@ def handle_message(event):
         return 0  
 
     elif 'PTT 熱門文章 Top 5' in cmd:
+
+        print('ok!')
 
         reply = ptt_top_5()
         
