@@ -138,6 +138,25 @@ def dcard_top_5():
 
     return reply
 
+def ptt_top_5():
+
+    reply = 'PTT 熱門文章 TOP 5'
+
+    url = 'https://disp.cc/m/'
+    resp = requests.get(url)
+    soup = BeautifulSoup(resp.text, 'html.parser')
+
+    ptt_titles = soup.find_all('div', 'ht_title')
+    ptt_links = soup.find_all('a')
+
+    ptt_article = []
+
+    for i in range(5):
+        ptt_article.append([ptt_titles[i].text, 'https://disp.cc/m/' + ptt_links[i]['href']])
+    
+    for index, item in enumerate(ptt_article):
+        reply += '\n{}. {}\n{}\n'.format(index + 1, item[0], item[1])
+
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
 
@@ -170,8 +189,12 @@ def handle_message(event):
                         text='找圖片'
                     ),
                     MessageTemplateAction(
-                        label='Dcard 熱門文章 Top 5',
-                        text='Dcard 熱門文章 Top 5'
+                        label='PTT 熱門文章 TOP 5',
+                        text='PTT 熱門文章 TOP 5'
+                    ),
+                    MessageTemplateAction(
+                        label='Dcard 熱門文章 TOP 5',
+                        text='Dcard 熱門文章 TOP 5'
                     )
                 ]
             )
@@ -311,7 +334,17 @@ def handle_message(event):
 
         return 0
 
-    elif 'Dcard 熱門文章 Top 5' in cmd:
+    elif 'PTT 熱門文章 Top 5' in cmd:
+
+        reply = ptt_top_5()
+        
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text = "{}".format(reply)))
+
+        return 0    
+
+    elif 'Dcard 熱門文章 TOP 5' in cmd:
 
         reply = dcard_top_5()
         
