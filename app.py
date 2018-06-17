@@ -385,7 +385,7 @@ def handle_message(event):
 
         return 0  
 
-    elif 'PTT 熱門文章 Top 5' in cmd:
+    elif 'PTT 熱門文章 TOP 5' in cmd:
 
         print('ok!')
 
