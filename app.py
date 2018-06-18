@@ -336,7 +336,7 @@ def handle_message(event):
 
     print(cmd)
 
-    if ('早' in cmd or '嘿' in cmd or '安' in cmd or '嗨' in cmd or  '你好' in cmd or'hello' in cmd or 'hi' in cmd or 'hey' in cmd) and mode != 3:
+    if ('早' in cmd or '嘿' in cmd or '安' in cmd or '嗨' in cmd or  '你好' in cmd or'hello' in cmd or 'hi' in cmd or 'hey' in cmd) and mode != 3 and mode != 4:
 
         mode = 0
 
@@ -369,7 +369,7 @@ def handle_message(event):
 
         return 0
 
-    elif '抽數字' in cmd:
+    elif ('抽數字' in cmd) and mode != 3:
 
         mode = 1
 
@@ -397,7 +397,7 @@ def handle_message(event):
 
         return 0
 
-    elif '拆解多項式' in cmd:
+    elif ('拆解多項式' in cmd) and mode != 3:
 
         mode = 2
 
@@ -425,7 +425,7 @@ def handle_message(event):
 
         return 0
 
-    elif '找圖片' in cmd:
+    elif ('找圖片' in cmd) and mode != 3:
 
         mode = 3
 
@@ -460,7 +460,7 @@ def handle_message(event):
         with open('{}_cmd.txt'.format(profile.user_id), 'w') as f:
             f.write(str(mode))
 
-        print('mode')
+        print(mode)
         
         line_bot_api.reply_message(
             event.reply_token,
