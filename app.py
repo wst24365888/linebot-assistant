@@ -212,6 +212,8 @@ def train_timetable(messages):
 
     reply = '從{}到{}的火車時刻表:\n'.format(dep_station, arr_station)
 
+    print(reply)
+
     dep_station = station_dict[dep_station]
     arr_station = station_dict[arr_station]
 
@@ -249,6 +251,8 @@ def train_timetable(messages):
             reply += '車次: {}\t發車時間: {}\t 到達時間: {}\t搭車時間: {} 分鐘\n'.format(timetable[i][0], timetable[i][1], timetable[i][2], timetable[i][3])
 
     reply += '輸入\'q\'離開'
+
+    print(reply)
     
     return reply
 
