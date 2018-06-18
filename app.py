@@ -251,7 +251,7 @@ def train_timetable(messages):
         timetable = sorted(timetable, key = lambda element: element[4])
 
         for i in range(len(timetable)):
-            reply += '車次: {}\n發車時間: {}\n 到達時間: {}\n搭車時間: {} 分鐘\n\n'.format(timetable[i][0], timetable[i][1], timetable[i][2], timetable[i][3])
+            reply += '車次: {}\n發車時間: {}\n到達時間: {}\n搭車時間: {} 分鐘\n\n'.format(timetable[i][0], timetable[i][1], timetable[i][2], timetable[i][3])
 
     reply += '輸入\'q\'離開'
 
