@@ -28,6 +28,10 @@ from bs4 import BeautifulSoup
 
 from user_agent import generate_user_agent
 
+import json
+
+import numpy as np
+
 app = Flask(__name__)
 
 line_bot_api = LineBotApi(os.environ['line_bot_api'])
@@ -136,6 +140,8 @@ def dcard_top_5():
     for index, item in enumerate(dcard_article):
         reply += '\n{}. {}\n{}\n'.format(index + 1, item[0], item[1])
 
+    reply += '輸入\'q\'離開'
+    
     return reply
 
 def ptt_top_5():
@@ -159,6 +165,8 @@ def ptt_top_5():
 
     print('ok!!')
 
+    reply += '輸入\'q\'離開'
+    
     return reply
 
 def newtalk_top_5():
@@ -184,6 +192,64 @@ def newtalk_top_5():
     for index, item in enumerate(newtalk_article):
         reply += '\n{}. {}\n{}\n'.format(index + 1, item[0], item[1])
 
+    reply += '輸入\'q\'離開'
+
+    return reply
+
+def train_timetable(messages):
+
+    with open('20180618.json', 'r', encoding = 'utf-8-sig') as f1:
+        data = json.loads(f1.read())
+
+    station_dict = {}
+
+    with open('stations.txt', 'r', encoding = 'utf-8-sig') as f2:
+        for lines in f2:
+            station_dict[lines.strip().split(':')[0]] = lines.strip().split(':')[1]
+
+    dep_station = messages.split(',')[0]
+    arr_station = messages.split(',')[1]
+
+    reply = '從{}到{}的火車時刻表:\n'.format(dep_station, arr_station)
+
+    dep_station = station_dict[dep_station]
+    arr_station = station_dict[arr_station]
+
+    timetable = []
+
+    for i in range(len(data['TrainInfos'])):    
+
+        train_profile = np.array([[d['Station'], d['ArrTime'], d['DepTime']] for d in data['TrainInfos'][i]['TimeInfos']])
+        stations = train_profile[:,0]
+
+        if dep_station in stations and arr_station in stations:
+
+            dep_time = train_profile[list(stations).index(dep_station)][2]
+            arr_time = train_profile[list(stations).index(arr_station)][1]
+
+            dep_time_trans = int(dep_time.split(':')[0])*60 + int(dep_time.split(':')[1])
+
+            hrs = int(arr_time.split(':')[0]) - int(dep_time.split(':')[0])
+            mins = int(arr_time.split(':')[1]) - int(dep_time.split(':')[1])
+
+            if hrs*60 + mins <= 0:
+                continue
+            else:
+                timetable.append([data['TrainInfos'][i]['Train'], dep_time, arr_time, hrs*60 + mins, dep_time_trans])
+
+    if timetable == []:
+
+        reply += 'Sorry~\n發生了一些錯誤,可能原因:\n1. 此路徑沒有班次\n2. 格式錯誤'
+
+    else:
+
+        timetable = sorted(timetable, key = lambda element: element[4])
+
+        for i in range(len(timetable)):
+            reply += '車次: {}\t發車時間: {}\t 到達時間: {}\t搭車時間: {} 分鐘\n'.format(timetable[i][0], timetable[i][1], timetable[i][2], timetable[i][3])
+
+    reply += '輸入\'q\'離開'
+    
     return reply
 
 @handler.add(MessageEvent, message=TextMessage)
@@ -196,7 +262,7 @@ def handle_message(event):
             # Note:三個Carousel中actions都得要相同, 不然會整台掛掉
             CarouselColumn(
                 thumbnail_image_url='https://truth.bahamut.com.tw/s01/201711/1264bad8430c679ef5c7ffd685244218.JPG',
-                title='數學工具',
+                title='小工具',
                 text='請選擇:',
                 actions=[
                     MessageTemplateAction(
@@ -206,6 +272,10 @@ def handle_message(event):
                     MessageTemplateAction(
                         label='拆解多項式',
                         text='拆解多項式'
+                    ),
+                    MessageTemplateAction(
+                        label='找圖片',
+                        text='找圖片'
                     )
                 ]
             ),
@@ -221,21 +291,29 @@ def handle_message(event):
                     MessageTemplateAction(
                         label='PTT 熱門文章 TOP 5',
                         text='PTT 熱門文章 TOP 5'
+                    ),
+                    MessageTemplateAction(
+                        label='Dcard 熱門文章 TOP 5',
+                        text='Dcard 熱門文章 TOP 5'
                     )
                 ]
             ),
             CarouselColumn(
                 thumbnail_image_url='https://i.pinimg.com/originals/53/07/1d/53071d73b869c9263b912e3b8a6fe459.gif',
-                title='爬蟲 Part2',
+                title='小工具 Part2',
                 text='請選擇:',
                 actions=[
                     MessageTemplateAction(
-                        label='找圖片',
-                        text='找圖片'
+                        label='查詢火車時刻表',
+                        text='查詢火車時刻表'
                     ),
                     MessageTemplateAction(
-                        label='Dcard 熱門文章 TOP 5',
-                        text='Dcard 熱門文章 TOP 5'
+                        label='回到主頁',
+                        text='回到主頁'
+                    ),
+                    MessageTemplateAction(
+                        label='回到主頁',
+                        text='回到主頁'
                     )
                 ]
             )
@@ -375,6 +453,34 @@ def handle_message(event):
 
         return 0
 
+    elif ('查詢火車時刻表' in cmd) and mode != 3:
+
+        mode = 4
+
+        with open('{}_cmd.txt'.format(profile.user_id), 'w') as f:
+            f.write(str(mode))
+
+        print('mode')
+        
+        line_bot_api.reply_message(
+            event.reply_token,
+            TemplateSendMessage(
+            alt_text='(選單)',
+            template=ButtonsTemplate(
+                title='查詢火車時刻表',
+                text='請輸入\'起站,迄站\'\nex. 永康,保安',
+                actions=[
+                    MessageTemplateAction(
+                        label='回到主頁',
+                        text='回到主頁'
+                    )
+                ]
+            )
+            )
+        )
+
+        return 0
+
     elif 'NewTalk 即時新聞 TOP 5' in cmd:
 
         reply = newtalk_top_5()
@@ -451,6 +557,16 @@ def handle_message(event):
                     ImageSendMessage(
                         original_content_url=img_url,
                         preview_image_url=img_url))
+
+            return 0
+
+        elif mode == 4:
+
+            reply = train_timetable(cmd)
+        
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text = "{}".format(reply)))
 
             return 0
 
