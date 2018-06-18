@@ -244,7 +244,7 @@ def train_timetable(messages):
 
     if timetable == []:
 
-        reply += 'Sorry~\n發生了一些錯誤,可能原因:\n1. 此路徑沒有班次\n2. 格式錯誤'
+        reply += 'Sorry~\n發生了一些錯誤,可能原因:\n1. 此路徑沒有班次\n2. 格式錯誤\n\n'
 
     else:
 
@@ -360,7 +360,7 @@ def handle_message(event):
 
         return 0
 
-    elif '回到主頁' in cmd or '功能' in cmd or '選單' in cmd:
+    elif '回到主頁' in cmd or '功能' in cmd or '選單' in cmd or 'q' == cmd or 'Q' == cmd:
 
         mode = 0
 
@@ -550,7 +550,7 @@ def handle_message(event):
 
             if 'https' not in img_url or check == 1:
 
-                reply = 'Sorry~\n發生了一些錯誤,可能原因:\n1. 找不到,換個關鍵字吧!\n2. 網站掛了QQ\n3. 圖片網址不安全\n4. 格式錯誤'
+                reply = 'Sorry~\n發生了一些錯誤,可能原因:\n1. 找不到,換個關鍵字吧!\n2. 網站掛了QQ\n3. 圖片網址不安全\n4. 格式錯誤\n\n輸入\'q\'離開'
         
                 line_bot_api.reply_message(
                     event.reply_token,
