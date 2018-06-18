@@ -210,7 +210,7 @@ def train_timetable(messages):
     dep_station = messages.split(',')[0]
     arr_station = messages.split(',')[1]
 
-    reply = '從{}到{}的火車時刻表:\n'.format(dep_station, arr_station)
+    reply = '從{}到{}的火車時刻表:\n\n'.format(dep_station, arr_station)
 
     dep_station = station_dict[dep_station]
     arr_station = station_dict[arr_station]
