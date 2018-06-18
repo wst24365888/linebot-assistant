@@ -201,7 +201,7 @@ def newtalk_top_5():
 def train_timetable(messages):
     
     time = str(datetime.datetime.now()).split()[1]
-    time_trans = int(time.split(':')[0])*60 + int(time.split(':')[1])
+    time_trans = int(time.split(':')[0])*60 + int(time.split(':')[1]) + 480
 
     with open('20180618.json', 'r', encoding = 'utf-8-sig') as f1:
         data = json.loads(f1.read())
@@ -212,8 +212,8 @@ def train_timetable(messages):
         for lines in f2:
             station_dict[lines.strip().split(':')[0]] = lines.strip().split(':')[1]
 
-    dep_station = messages.split(',')[0]
-    arr_station = messages.split(',')[1]
+    dep_station = messages.split()[0]
+    arr_station = messages.split()[1]
 
     reply = '從{}到{}\n兩小時內的火車時刻表:\n\n'.format(dep_station, arr_station)
 
@@ -475,7 +475,7 @@ def handle_message(event):
             alt_text='(選單)',
             template=ButtonsTemplate(
                 title='查詢火車時刻表',
-                text='請輸入\'起站,迄站\'\nex. 永康,保安',
+                text='請輸入\'起站 迄站\'\nex. 永康 保安',
                 actions=[
                     MessageTemplateAction(
                         label='回到主頁',
