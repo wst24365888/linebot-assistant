@@ -32,6 +32,8 @@ import json
 
 import numpy as np
 
+import datetime
+
 app = Flask(__name__)
 
 line_bot_api = LineBotApi(os.environ['line_bot_api'])
@@ -197,6 +199,9 @@ def newtalk_top_5():
     return reply
 
 def train_timetable(messages):
+    
+    time = str(datetime.datetime.now()).split()[1]
+    time_trans = int(time.split(':')[0])*60 + int(time.split(':')[1])
 
     with open('20180618.json', 'r', encoding = 'utf-8-sig') as f1:
         data = json.loads(f1.read())
@@ -210,7 +215,7 @@ def train_timetable(messages):
     dep_station = messages.split(',')[0]
     arr_station = messages.split(',')[1]
 
-    reply = '從{}到{}的火車時刻表:\n\n'.format(dep_station, arr_station)
+    reply = '從{}到{}\n兩小時內的火車時刻表:\n\n'.format(dep_station, arr_station)
 
     dep_station = station_dict[dep_station]
     arr_station = station_dict[arr_station]
@@ -232,7 +237,7 @@ def train_timetable(messages):
             hrs = int(arr_time.split(':')[0]) - int(dep_time.split(':')[0])
             mins = int(arr_time.split(':')[1]) - int(dep_time.split(':')[1])
 
-            if hrs*60 + mins <= 0:
+            if (hrs*60 + mins <= 0) or (dep_time_trans - time_trans <= 0) or (dep_time_trans - time_trans >= 120):
                 continue
             else:
                 timetable.append([data['TrainInfos'][i]['Train'], dep_time, arr_time, hrs*60 + mins, dep_time_trans])
@@ -246,7 +251,7 @@ def train_timetable(messages):
         timetable = sorted(timetable, key = lambda element: element[4])
 
         for i in range(len(timetable)):
-            reply += '車次: {}\t發車時間: {}\n 到達時間: {}\t搭車時間: {} 分鐘\n\n'.format(timetable[i][0], timetable[i][1], timetable[i][2], timetable[i][3])
+            reply += '車次: {}\n發車時間: {}\n 到達時間: {}\n搭車時間: {} 分鐘\n\n'.format(timetable[i][0], timetable[i][1], timetable[i][2], timetable[i][3])
 
     reply += '輸入\'q\'離開'
 
