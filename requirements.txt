@@ -3,3 +3,4 @@ gunicorn
 flask
 user_agent
 numpy
+beautifulsoup4==4.6.0
