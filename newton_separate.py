@@ -1,3 +1,5 @@
+from fractions import Fraction
+
 def gcd(x,y):
 
     if x%y == 0:
@@ -12,7 +14,7 @@ def check(deg,terms,x,y):
     reply = ""
 
     sum = 0
-    root = y/x*(-1)
+    root = Fraction(y,x)*(-1)
 
     for i4 in range (0,deg+1):
         sum += terms[i4]*root**i4
